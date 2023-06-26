@@ -1,0 +1,28 @@
+app:
+  name: "WebAppExample"
+  mode: "Dev"
+  version: "^1.0.0"
+  port: 8080
+
+log:
+  level: "Debug"
+  filename: "web-app.log"
+  maxSize: 200
+  maxAge: 30
+  maxBackups: 7
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  dbName: "go-mysql-demo"
+  user: "root"
+  password: "123456"
+  maxOpenConns: 20
+  maxIdleConns: 20
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: "123456"
+  db: 0
+  poolSize: 20
