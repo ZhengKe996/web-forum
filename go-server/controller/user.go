@@ -10,7 +10,7 @@ import (
 
 // SignUpHandler 处理注册请求的函数
 func SignUpHandler(c *gin.Context) {
-	// 1.参数校验
+	// 1.获取参数与参数校验
 	p := new(models.ParamSignUp)
 	if err := c.ShouldBindJSON(p); err != nil {
 		// 请求参数有误，直接返回响应
@@ -23,7 +23,14 @@ func SignUpHandler(c *gin.Context) {
 	}
 
 	// 2.业务处理
-	logic.SignUp(p)
+	if err := logic.SignUp(p); err != nil {
+		zap.L().Error("SignUpHandler insert error", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{
+			"message": "注册失败",
+			"success": false,
+		})
+		return
+	}
 
 	// 3.返回响应
 	c.JSON(http.StatusOK, gin.H{
