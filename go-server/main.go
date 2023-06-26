@@ -8,6 +8,7 @@ import (
 	"go-web-example/dao/mysql"
 	"go-web-example/dao/redis"
 	"go-web-example/logger"
+	"go-web-example/pkg/snowflake"
 	"go-web-example/routes"
 	"go-web-example/settings"
 	"go.uber.org/zap"
@@ -55,6 +56,11 @@ func main() {
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", viper.GetString("app.port")),
 		Handler: router,
+	}
+
+	// 6.
+	if err := snowflake.Init(settings.Conf.StartTime, settings.Conf.MachineID); err != nil {
+		zap.L().Error("Init snowflake connect failed", zap.Error(err))
 	}
 
 	go func() {
