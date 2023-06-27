@@ -51,7 +51,7 @@ func main() {
 	defer redis.Close()
 
 	// 4. 注册路由
-	router := routes.Setup()
+	router := routes.Setup(settings.Conf.Mode)
 	// 5. 启动服务（优雅关机）
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", viper.GetString("app.port")),

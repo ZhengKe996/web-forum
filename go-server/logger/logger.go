@@ -26,7 +26,7 @@ func Init(config *settings.LogConfig, mode string) (err error) {
 	}
 
 	var core zapcore.Core
-	if mode == "Dev" {
+	if mode == gin.DebugMode {
 		// 开发模式，日志输出到终端
 		consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
 		core = zapcore.NewTee(

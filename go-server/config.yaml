@@ -1,6 +1,6 @@
 app:
   name: "WebAppExample"
-  mode: "Dev"
+  mode: "debug" # 发布模式 release 开发模式 debug
   version: "^1.0.0"
   port: 8080
   startTime: "2023-01-01"
