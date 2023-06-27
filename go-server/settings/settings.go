@@ -6,18 +6,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-var Conf = new(AppConfig) // 全局变量，保存配置信息
+var Conf = new(Config) // 全局变量，保存配置信息
 
-type AppConfig struct {
-	Name         string `mapstructure:"name"`
-	Mode         string `mapstructure:"mode"`
-	MachineID    int64  `mapstructure:"machineID"`
-	StartTime    string `mapstructure:"startTime"`
-	Version      string `mapstructure:"version"`
-	Port         string `mapstructure:"port"`
+type Config struct {
+	*AppConfig   `mapstructure:"app"`
 	*LogConfig   `mapstructure:"log"`
 	*MYSQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`
+}
+type AppConfig struct {
+	Name      string `mapstructure:"name"`
+	Mode      string `mapstructure:"mode"`
+	MachineID int64  `mapstructure:"machineID"`
+	StartTime string `mapstructure:"startTime"`
+	Version   string `mapstructure:"version"`
+	Port      int    `mapstructure:"port"`
 }
 
 type LogConfig struct {
