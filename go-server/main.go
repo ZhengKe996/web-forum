@@ -52,13 +52,14 @@ func main() {
 
 	// 4. 注册路由
 	router := routes.Setup(settings.Conf.Mode)
+
 	// 5. 启动服务（优雅关机）
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", viper.GetString("app.port")),
 		Handler: router,
 	}
 
-	// 6.
+	// 6. 雪花ID初始化
 	if err := snowflake.Init(settings.Conf.StartTime, settings.Conf.MachineID); err != nil {
 		zap.L().Error("Init snowflake connect failed", zap.Error(err))
 	}

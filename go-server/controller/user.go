@@ -34,7 +34,38 @@ func SignUpHandler(c *gin.Context) {
 
 	// 3.返回响应
 	c.JSON(http.StatusOK, gin.H{
-		"message": "OK",
+		"message": "注册成功",
+		"success": true,
+	})
+}
+
+// LoginHandler 处理登录请求的函数
+func LoginHandler(c *gin.Context) {
+	// 1.获取参数与参数校验
+	p := new(models.ParamLogin)
+	if err := c.ShouldBindJSON(p); err != nil {
+		// 请求参数有误，直接返回响应
+		zap.L().Error("LoginHandler with invalid param", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{
+			"message": err.Error(),
+			"success": false,
+		})
+		return
+	}
+
+	// 2.业务处理
+	if err := logic.Login(p); err != nil {
+		zap.L().Error("LoginHandler query error", zap.Error(err))
+		c.JSON(http.StatusOK, gin.H{
+			"message": "登录失败",
+			"success": false,
+		})
+		return
+	}
+
+	// 3.返回响应
+	c.JSON(http.StatusOK, gin.H{
+		"message": "登录成功",
 		"success": true,
 	})
 }

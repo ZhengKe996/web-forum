@@ -15,6 +15,7 @@ func Setup(mode string) *gin.Engine {
 	r.Use(logger.GinLogger(), logger.GinRecovery(true)) // 使用中间件
 
 	r.POST("/sign", controller.SignUpHandler)
+	r.POST("/login", controller.LoginHandler)
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
