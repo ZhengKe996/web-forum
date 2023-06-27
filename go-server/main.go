@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/spf13/viper"
 	"go-web-example/dao/mysql"
 	"go-web-example/dao/redis"
 	"go-web-example/logger"
@@ -55,7 +54,7 @@ func main() {
 
 	// 5. 启动服务（优雅关机）
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%s", viper.GetString("app.port")),
+		Addr:    fmt.Sprintf(":%d", settings.Conf.AppConfig.Port),
 		Handler: router,
 	}
 
