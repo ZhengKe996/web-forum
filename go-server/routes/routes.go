@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-web-example/controller"
 	"go-web-example/logger"
+	"go-web-example/middleware"
 	"net/http"
 )
 
@@ -16,6 +17,9 @@ func Setup(mode string) *gin.Engine {
 
 	r.POST("/sign", controller.SignUpHandler)
 	r.POST("/login", controller.LoginHandler)
+	r.GET("/ping", middleware.JWTAuthMiddleware(), func(c *gin.Context) {
+		c.String(http.StatusOK, "Pong")
+	})
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

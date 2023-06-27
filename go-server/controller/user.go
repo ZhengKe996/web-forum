@@ -52,7 +52,7 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	// 2.业务处理
-	if err := logic.Login(p); err != nil {
+	if token, err := logic.Login(p); err != nil {
 		zap.L().Error("LoginHandler query error", zap.String("username", p.Username), zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserNotExist) {
 			response.ResponseError(c, response.CodeUserNotExist)
@@ -61,8 +61,8 @@ func LoginHandler(c *gin.Context) {
 
 		response.ResponseErrorWithMessage(c, response.CodeInvalidParam, err.Error())
 		return
+	} else {
+		// 3.返回响应
+		response.ResponseSuccess(c, token)
 	}
-
-	// 3.返回响应
-	response.ResponseSuccess(c, nil)
 }
